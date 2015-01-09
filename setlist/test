@@ -1,0 +1,10 @@
+ <iframe ng-if="media.domain == 'vimeo'" src="//player.vimeo.com/video{{ media.link }}" width="420" height="315" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen="true"></iframe>
+
+ <iframe id="db" src="https://dl.dropboxusercontent.com/s/x3y7cfap6p200q1/aman%20aman%20akustik.m4a?dl=0"></iframe>
+
+ https://www.dropbox.com/s/x3y7cfap6p200q1/aman%20aman%20akustik.m4a?dl=0
+
+ temp_comments = Comment.objects.filter(author = 1, content_type = 18).latest('created')
+
+ | orderObjectBy : 'song_number'
+

@@ -1,0 +1,58 @@
+<h1>Create Song</h1>
+
+<div ng-show="error" class="alert alert-danger">{{error}}</div>
+<form id="create-form" name="form" ng-submit="createSong()" role="form">
+    <div class="form-group">
+        <label for="bandname">Songname</label>
+        <i class="fa fa-key"></i>
+        <input type="text" name="songname" id="songname" class="form-control" ng-model="songname" required />
+        <span ng-show="form.songname.$dirty && form.songname.$error.required" class="help-block">songname is required</span>
+    </div>
+
+
+
+
+
+    <div class="form-group">
+        <label for="length">Track Length</label>
+        <i class="fa fa-key"></i>
+        <input type="text" name="length" id="original_album_name" class="form-control" ng-model="length" required />
+        <span ng-show="form.length.$dirty && form.original_album_name.$error.required" class="help-block">Track Length is required</span>
+    </div>
+    <label> is originial?</label>
+
+    <div class="form-group">
+    <div class="btn-group" data-toggle="buttons">
+
+    <label class="btn btn-primary" >
+    <input type="radio" name="is_original"  data-ng-model="is_original" value="true" id ="1" ng-change="setOriginalValue(is_original)"> Yes
+    </label>
+    <label class="btn btn-primary" >
+    <input type="radio" name="is_original" data-ng-model="is_original" value="false" id ="2" ng-change="setOriginalValue(is_original)"> No
+        </label>
+    </div>
+    </div>
+
+
+
+    <div class="form-group" ng-hide="is_original_indicator">
+        <label for="original_artist">Original Artist</label>
+        <i class="fa fa-key"></i>
+        <input type="text" name="original_artist" id="original_artist" class="form-control" ng-model="original_artist" />
+        <span ng-show="form.original_artist.$dirty" class="help-block">Somethings wrong</span>
+    </div>
+
+
+    <div class="form-group" ng-hide="is_original_indicator">
+        <label for="original_album_name">Original Album</label>
+        <i class="fa fa-key"></i>
+        <input type="text" name="original_album_name" id="original_album_name" class="form-control" ng-model="original_album_name" />
+        <span ng-show="form.original_album_name.$dirty" class="help-block">Somethings wrong</span>
+    </div>
+
+    <div class="form-actions">
+        <button type="submit" class = "btn btn-primary" ng-disabled="form.$invalid || dataLoading" class="btn btn-danger">Create Song</button>
+        <img ng-if="dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+    </div>
+
+</form>

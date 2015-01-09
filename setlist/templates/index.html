@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html ng-app="BasicHttpAuthExample">
+<head>
+    <meta charset="utf-8" />
+    <title>setlist.io</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+
+</head>
+<body>
+{% verbatim %}
+
+
+        <div class="container" autoscroll="true">
+            <div>
+                <div ng-view autoscroll="true"></div>
+            </div>
+        </div>
+
+    <div class="credits text-center" style="margin-top: 50px">
+        <p>
+            <a href="">setlist.io</a>
+        </p>
+        <p>
+            <a href="">Can Ozinci</a>
+        </p>
+    </div>
+
+    <!-- http şeklinde link vermeyince router sapıtıyor -->
+
+    <script type="text/javascript" src="http://canozincimbp.com:8000/static/scripts/lib/jquery.js"></script>
+    <script type="text/javascript" src="http://canozincimbp.com:8000/static/scripts/lib/moment-with-locales.min.js"></script>
+    <script type="text/javascript" src="http://canozincimbp.com:8000/static/scripts/lib/angular.js"></script>
+    <script type="text/javascript" src="http://canozincimbp.com:8000/static/scripts/lib/angular-resource.js"></script>
+    <script type="text/javascript" src="http://canozincimbp.com:8000/static/scripts/lib/angular-route.js"></script>
+
+
+    <script type="text/javascript" src="http://canozincimbp.com:8000/static/scripts/lib/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="http://canozincimbp.com:8000/static/scripts/lib/sortable.js"></script>
+
+    <script type="text/javascript" src="http://canozincimbp.com:8000/static/scripts/lib/angular-sanitize.min.js"></script>
+    <script type="text/javascript" src="http://canozincimbp.com:8000/static/scripts/lib/ng-infinite-scroll.min.js"></script>
+    <script type="text/javascript" src="http://canozincimbp.com:8000/static/scripts/lib/angular-cookies.js"></script>
+
+    <script type="text/javascript" src="http://canozincimbp.com:8000/static/scripts/lib/oauth.min.js"></script>
+    <script type="text/javascript" src="http://canozincimbp.com:8000/static/scripts/lib/elasticsearch.angular.min.js"></script>
+
+    <script type="text/javascript" src="http://canozincimbp.com:8000/static/scripts/app.js"></script>
+    <script type="text/javascript" src="http://canozincimbp.com:8000/static/modules/authentication/services.js"></script>
+    <script type="text/javascript" src="http://canozincimbp.com:8000/static/modules/authentication/controllers.js"></script>
+    <script type="text/javascript" src="http://canozincimbp.com:8000/static/modules/home/controllers.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+{% endverbatim %}
+</body>
+</html>

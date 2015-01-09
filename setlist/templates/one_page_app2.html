@@ -1,0 +1,68 @@
+{% load staticfiles %}
+<html ng-cloak ng-app="authApp">
+<head>
+    <link rel="stylesheet" href="{% static "css/angular-csp.css" %}"/>
+    <link rel="stylesheet" href="{% static "css/bootstrap.min.css"%}"/>
+</head>
+<body>
+    <div class="navbar navbar-fixed-top" ng-controller="authController"
+         ng-init="user='{{user.username}}'">
+        {% verbatim %}
+        <div ng-show="user" class="navbar-form navbar-right">
+
+            <input type="submit" class="btn btn-default" ng-click="logout()"
+                   value="logout {{user}}"/>
+        </div>
+        <div ng-hide="user">
+            <form id="id_auth_form" class="navbar-form navbar-right"
+                  ng-submit="get_token()">
+                <div class="form-group">
+                    <input ng-model="username" required name="username"
+                           type="text" placeholder="username" class="form-control">
+                </div>
+                <div class="form-group">
+                    <input ng-model="password" required name="password" type="password"
+                           placeholder="password" class="form-control">
+                </div>
+                <div class="btn-group">
+                    <input type="submit" class="btn btn-default" value="login">
+                    <input type="submit" class="btn btn-default" value="register"
+                           ng-click="register($event)">
+                </div>
+            </form>
+        </div>
+
+
+
+    <div ng-controller="bandController">
+
+        <button ng-click="showUsers()" type="button">Show Users</button><br><br>
+            <div ng-repeat="user in users">
+
+            <p1> {{ band.name }} </p1>
+    </div>
+        <button ng-click="showBands()" type="button">Show Bands</button><br><br>
+            <div ng-repeat="band in bands">
+
+            <p1> {{ band.name }} </p1>
+    </div>
+
+
+     <span ng-show = "token.text"> {{ token.text }}</span>
+
+
+
+
+
+
+</div>
+</body>
+{% endverbatim %}
+
+<script src="{% static "js/libs/jquery/jquery.js" %}"></script>
+<script src="{% static "js/libs/bootstrap.min.js" %}"></script>
+<script src="{% static "js/libs/angular/angular.js" %}"></script>
+<script src="{% static "js/libs/angular/angular-resource.min.js" %}"></script>
+<script src="{% static "js/libs/autofill-event.js" %}"></script>
+<script src="{% static "js/app/app.js" %}"></script>
+</html>

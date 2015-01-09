@@ -1,0 +1,115 @@
+<div ng-show="error" class="alert alert-danger">{{error}}</div>
+
+<h1>{{ song.name }}</h1>
+<button ng-show="song.lyrics && !addLyricsBoxVisible" class="btn btn-primary btn-md" ng-click="lyricsBoxVisible =!lyricsBoxVisible"> See Lyrics</button>
+<div ng-show="lyricsBoxVisible" style=" white-space: pre; margin-top: 5px; text-align: center; font-size: larger">
+
+    {{ song.lyrics }}
+
+</div>
+
+<button ng-show="lyricsBoxVisible" class="btn btn-primary btn-md" ng-click="addLyricsBoxVisible =!addLyricsBoxVisible; lyricsBoxVisible =!lyricsBoxVisible"> Edit Lyrics</button>
+
+<button ng-show="!song.lyrics" class="btn btn-primary btn-md" ng-click="addLyricsBoxVisible =!addLyricsBoxVisible"> Add Lyrics</button>
+<div ng-show="addLyricsBoxVisible">
+      <form role="form">
+    <div class="form-group">
+      <label for="comment">Paste your lyrics</label>
+      <textarea class="form-control" rows="25" id="lyrics" style=" overflow: scroll; text-align: center;" ng-model="song.lyrics"> </textarea>
+    </div>
+   <button type="submit" class="btn btn-default" ng-click="addSongLyrics(song.lyrics);addLyricsBoxVisible =!addLyricsBoxVisible">Save Lyrics</button>
+  </form>
+
+</div>
+
+
+<h2>Band Member Parts:</h2>
+<table ng-show="song.song_parts" class="table" style="width: auto">
+    <tr>
+    <th>Member</th>
+    <th>Instrument</th>
+    <th></th>
+    </tr>
+    <tr ng-repeat="part in song.song_parts">
+    <td><img src="/media/{{ part.user_instrument.user.picture}}" style="max-width: 50px; max-height: 50px;  border-radius: 1px"/>
+    {{ part.user_instrument.user.first_name }}</td>
+    <td>{{ part.user_instrument.Instrument.name }}</td>
+    <td><button type="button" class="close"  aria-hidden="true" ng-click="removeSongPart(song.band, song.id, part.id)" >&times;</button></td>
+    </td>
+    </tr>
+</table>
+<button class="btn btn-primary" ng-click="addSongPart(song.band)"> Add Member Part </button>
+<div ng-show ="addSongPartBoxVisible">
+        Select A Band Member
+    <div ng-repeat="member in members">
+       <strong > {{ member.user.first_name }} {{ member.user.last_name }} </strong>
+        <div ng-repeat="memberplays in member.user.user_playing">
+
+         {{ memberplays.Instrument.name }}<span ng-show="checkExisting(memberplays.id)"> Already in the Song  </span> <button ng-click="createSongPart(memberplays.id,song.band,song.id )" ng-hide="checkExisting(memberplays.id)" class="btn btn-primary btn-sm"> Add</button> <br> <br>
+        </div>
+
+    </div>
+    <button class="btn btn-default" ng-click="addSongPartBoxVisible=false">Close</button>
+
+</div>
+
+<h2>Comments:</h2>
+<div ng-repeat="comment in song.comments" ng-show="song.comments">
+    <img src="/media/{{ comment.author.picture}}" style="max-width: 50px; max-height: 50px;  border-radius: 1px"/>
+    <span style="color: darkblue;"> {{ comment.author.username }} </span> :
+    {{ comment.body }}
+    <span style="font-style: italic; color: gray;"> {{ comment.created | moment:'fromNow'}}</span>
+    <hr>
+</div>
+<button class="btn btn-primary" ng-click="addCommentBoxVisible=true"> Add Comment</button>
+<div ng-show="addCommentBoxVisible">
+<form>
+  <div class="form-group">
+    <label for="commentEntry">Enter Comment</label>
+    <textarea class="form-control" rows="3" ng-model="$scope.commentbody"></textarea>
+  </div>
+
+<button type="submit" class="btn btn-default" ng-click="addSongComment(song.id,song.band,$scope.commentbody)">Submit</button>
+</form>
+
+
+
+
+
+</div>
+
+<h2>Extrenal Media:</h2>
+
+<div class="col-xs-6" ng-repeat="media in song.media" ng-show="song.media" style=" margin-bottom: 25px">
+
+    <iframe class="col-xs-7" width="auto" height="100%" ng-src="{{getIframeSource(media.domain,media.link)}}" frameborder="0" allowfullscreen="true"></iframe>
+        <img class="col-md-2" src="/media/{{ media.file_creator.picture}}" style="margin: 0;padding: 0"/>
+   <div class="col-xs-3">
+    <span style="color: darkblue;"> {{ media.file_creator.username }} </span> :
+    {{ media.description }}<br>
+    <span style="font-style: italic; color: gray;"> {{ media.created | moment:'fromNow'}}</span>via {{ media.domain }}<br>
+    </div>
+       <hr>
+</div>
+<div style="clear: both;"> </div>
+<button class="btn btn-primary" ng-click="addMediaBoxVisible=true"> Add Media </button>
+<div ng-show="addMediaBoxVisible">
+<form>
+  <div class="form-group">
+    <label for="medaiEntry">Paste Link</label>
+    <textarea class="form-control" rows="1" ng-model="$scope.medialink"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="medaiDescription">Enter your Notes</label>
+    <textarea class="form-control" rows="2" ng-model="$scope.mediadescription"></textarea>
+  </div>
+<button type="submit" class="btn btn-default" ng-click="addSongMedia(song.id,song.band,$scope.medialink,$scope.mediadescription)">Submit</button>
+</form>
+</div>
+
+<h2>Band Recordings:</h2>
+<audio controls>
+  <source src="https://dl.dropboxusercontent.com/s/x3y7cfap6p200q1/aman%20aman%20akustik.m4a" type="audio/mpeg">
+</audio>
+<br>
+<button class="btn btn-primary"> Add Band Recording </button>

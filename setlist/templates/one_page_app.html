@@ -1,0 +1,35 @@
+<!doctype html>
+<html ng-app="example.app.list">
+
+
+<head>
+    <script type="text/javascript" src="../static/js/libs/angular/angular.min.js"></script>
+    <script type="text/javascript" src="../static/js/libs/angular/angular-resource.min.js"></script>
+    <script type="text/javascript" src="../static/js/libs/angular/underscore.js"></script>
+    <script type="text/javascript" src="../static/js/libs/angular/angular-cookies.js"></script>
+    <script type="text/javascript" src="../static/js/app/bands.js"></script>
+</head>
+<body>
+{% verbatim %}
+<div ng-controller="UserController" ng-cloak>
+
+    <div ng-repeat="user in users">
+
+            <p1> {{ user.id }} {{ user.username }} {{ user.first_name }} </p1>
+    </div>
+</div>
+<br>
+<div ng-controller="SongController" ng-cloak>
+
+    <div ng-repeat="song in songs">
+
+            <p1> {{ song.name }} </p1>
+    </div>
+</div>
+
+
+
+
+{% endverbatim %}
+</body>
+</html>

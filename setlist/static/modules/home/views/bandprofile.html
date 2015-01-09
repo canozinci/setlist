@@ -1,0 +1,107 @@
+<img src="/media/{{ band.logo }}" style="width: 100%; height: 400px"/>
+<h1> {{ band.name }}</h1>
+<h4 style="font-style: italic"> {{ band.description }}</h4>
+
+<h3> Band Members: <span style="font-style: italic; color: gray;">({{ members.length }})</span></h3>
+<div ng-repeat="member in members">
+
+    <br>
+    <a href="/profiles/{{member.id}}">
+
+    <img src="/media/{{ member.picture}}" style="max-width: 50px; max-height: 50px;  border-radius: 1px">
+            <span>{{ member.first_name }} {{ member.last_name }}</span>
+    </a>
+
+    <span style="color:gray; font-size: small">member since:</span> <span style="font-size: small; color: lightslategray">{{ member.date_joined | date:'MMM yyyy'}}</span>
+</div>
+<hr>
+<h3> Upcoming Band Events <span style="font-style: italic; color: gray;">({{ events.length }})</span></h3>
+<div ng-repeat="event in events">
+    What: {{ event.name }} <br>
+    When: {{ event.date  | date:'d MMM yy'}} <br>
+    Where: {{ event.venue.name }}<br>
+    Type: {{ event.type }}<br>
+    <span style="font-weight: bold"> Attending: </span>
+    <div ng-repeat="a in event.attends" style="display: inline">
+        {{ a.first_name }}<span ng-show="currentuserid ==a.id" style="color: darkblue; border-bottom: 1px dashed darkblue; font-size: small"> change</span>
+        <span ng-hide = "($index+1) == event.attends.length">,</span>
+    </div>
+    <br>
+    <span style="font-weight: bold"> Not Coming: </span>
+   <div ng-repeat="a in event.notattends" style="display: inline">
+         {{ a.first_name  }}<span ng-show="currentuserid ==a.id" style="color: darkblue; border-bottom: 1px dashed darkblue; font-size: small"> change</span>
+       <span ng-hide = "($index+1) == event.notattends.length">,</span>
+    </div>
+    <br>
+    <span style="font-weight: bold"> Not replied: </span>
+   <div ng-repeat="a in event.notreplies" style="display: inline">
+        {{ a.first_name  }}<span ng-show="currentuserid ==a.id" style="color: darkblue; border-bottom: 1px dashed darkblue; font-size: small"> change</span>
+       <span ng-hide = "($index+1) == event.notreplies.length">,</span>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+
+<hr>
+<h3> Band Feed</h3>
+<div ng-repeat = "action in actions">
+
+
+    <a href="/profiles/{{action.actor_object_id}}">
+    <img src="{{ action.data.user_profile_pic}}" style="max-width: 50px; max-height: 50px;  border-radius: 1px"><br>
+    {{ action.data.first_name }} {{ action.data.last_name }}</a> {{ action.verb }}
+
+    <div ng-show="action.action_object_content_type == 18">
+    song <a href="/bands/{{ action.data.band_id }}/songs/{{ action.data.song_id }}"> {{ action.data.song_name }} </a>  {{ action.timestamp  | moment:'fromNow' }}
+    </div>
+
+    <div ng-show = "action.action_object_content_type == 29">
+        <div ng-show= "action.data.comment_type == 'song_comment' ">
+            song <a href="/bands/{{ action.data.band_id }}/songs/{{ action.data.song_id }}">{{ action.data.song_name }} </a>{{ action.data.comment_body }} {{ action.timestamp  | moment:'fromNow' }}
+        </div>
+        <div ng-show ="action.data.comment_type == 'setlist_comment' ">
+            setlist <a href="/bands/{{ action.data.band_id }}/setlists/{{ action.data.setlist_id }}">{{ action.data.setlist_name }} </a>{{ action.data.comment_body }} {{ action.timestamp  | moment:'fromNow' }}
+        </div>
+    </div><br>
+
+    <div ng-show ="action.action_object_content_type == 19">
+    in song <a href="/bands/{{ action.data.band_id }}/songs/{{ action.data.song_id }}"> {{ action.data.song_name }} </a>  {{ action.timestamp  | moment:'fromNow' }}  <br>
+     <img src="{{ action.data.performer_profile_pic}}" style="max-width: 50px; max-height: 50px;  border-radius: 1px">{{ action.data.performer_first_name }} {{ action.data.performer_last_name }} {{ action.data.instrument }}
+    </div><br>
+
+
+</div>
+<hr>
+
+<h3 style="display: inline-block"> Band Songs <span style="font-style: italic; color: gray;">({{ songs.length }})</span></h3> <button type="button" class="btn btn-primary" ng-click="addSong()"> Add Song</button>
+<div style="clear: both;"></div>
+
+<div ng-repeat="song in songs">
+    <br>
+         <a href="http://canozincimbp.com:8000/bands/{{ band.id }}/songs/{{ song.id }}"> <span>{{ song.name }}</span> </a>
+    <span style="font-size: small; color: gray; font-style: italic">by </span><span style="font-size: small">{{ song.original_artist }}</span>
+
+</div>
+<hr>
+<h3 style="display: inline-block"> Setlists  <span style="font-style: italic; color: gray;">({{ setlists.length }})</span></h3> <button type="button" class="btn btn-primary btn-sm" ng-click="addSetlistBox =! addSetlistBox"> Add Setlist</button>
+<div style="clear: both;"></div>
+<div ng-show ="addSetlistBox">
+<form>
+  <div class="form-group">
+    <label for="createSetlist">Enter Setlist Name:</label>
+    <textarea class="form-control" rows="1" ng-model="$scope.setlistName"></textarea>
+  </div>
+
+<button type="submit" class="btn btn-default" ng-click="createSetlist($scope.setlistName)">Create</button>
+</form>
+</div>
+
+
+<div ng-repeat="setlist in setlists">
+    <br>
+         <a href="http://canozincimbp.com:8000/bands/{{ band.id }}/setlists/{{ setlist.id }}"> <span>{{ setlist.name }}</span> </a>
+
+</div>
+<hr>
+<h3 style="display: inline-block"> Events </h3> <button type="button" class="btn btn-primary"> Add Event</button>
+<div style="clear: both;"></div>
+

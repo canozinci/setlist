@@ -1,0 +1,32 @@
+<h1>Welcome {{ currentuser.first_name }}</h1>
+<p>You're logged in!!</p>
+<p>Yout last visit: {{ currentuser.last_login | date:'EEEE hh mm a' }} <a ng-click="logout()">Logout</a></p>
+
+
+
+<div class="col-md-4">
+<button class ="btn btn-primary"  ng-click="showUsers()">Show Users</button>
+<div ng-repeat="user in users" ng-animate=" 'animate'">
+    <br>
+    <a href="/profiles/{{user.id}}">
+    <span class="col-md-3">{{ user.username }}</span>
+    <img src="media/{{ user.picture }}" style="max-width: 50px; max-height: 50px;  border-radius: 5px">
+    </a>
+     <br>
+</div>
+</div>
+  <div class="col-md-4">
+<button class ="btn btn-primary" ng-click="showBands()" >Show Bands</button>
+<div ng-repeat="band in bands">
+    <br>
+    <a href="/bands/{{band.id}}">
+    <span>{{ band.name }}</span>
+    </a>
+
+
+</div>
+</div>
+<div class="col-md-4">
+<button class ="btn btn-primary" ng-click="createBands()" >Create Bands</button>
+
+</div>

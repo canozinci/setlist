@@ -1,0 +1,105 @@
+<div ng-show="error" class="alert alert-danger">{{error}}</div>
+
+
+<div style=" margin-top: 10px;">
+<span style="font-size: small">Setlist Name</span> <br>
+    <span style="font-size: x-large">{{setlist.name }}</span><br><br>
+<button class="btn btn-primary btn-sm" ng-click="showSectionBox()"> Add section</button>
+<button class="btn btn-danger btn-sm" ng-click="deleteSetlist()" > Delete setlist</button>
+
+<div ng-show="addSetlistBoxVisible">
+    <br>
+<form>
+  <div class="form-group">
+    <label for="sectionEntry">Enter Section Name:</label>
+    <textarea class="form-control" rows="3" ng-model="$scope.sectionName"></textarea>
+  </div>
+
+<button type="submit" class="btn btn-default" ng-click="addSetlistSection($scope.sectionName)">Create</button>
+</form>
+</div>
+    <hr>
+</div>
+
+    <div ng-repeat="section in setlist.sections">
+
+    <span style="font-size: small">Section:</span><br>
+        <span style="font-size: large">{{ section.name }}</span>
+        <button class="btn btn-danger btn-xs"  type="button" ng-click="deleteSection(section.id)"> Delete</button>
+        <br>
+    <span style="color: gray"> Total Songs: </span> {{ section.section_songs.length }}
+         <br>
+        <br>
+
+         <div ui-sortable="sortableOptions" ng-model ="section.section_songs" >
+
+       <div ng-repeat="section_song in section.section_songs ">
+
+        <span class="glyphicon glyphicon-chevron-right" style="font-size: x-small"></span> {{ section_song.song_number }}
+        <a href="http://canozincimbp.com:8000/bands/{{ section_song.song.band }}/songs/{{ section_song.song.id }}">
+        {{ section_song.song.name }}  </a>
+        <button class="btn btn-default btn-xs"  type="button" ng-click="getSongDetails(section_song.song.id)" data-toggle="collapse" data-target="#collapseSongDetail{{ $parent.$index + 1 }}{{ $index + 1 }}" aria-expanded="false"> Details</button>
+                <button class="close"  type="button" ng-click="deleteSong(section.id, section_song.id,$parent.$index)"> &times;</button> <br><br>
+
+           <div class="collapse" id="collapseSongDetail{{ $parent.$index + 1 }}{{ $index + 1 }}">
+            <div class="well">
+                <div ng-show="sectionsong">User Parts:</div>
+                <div ng-repeat="sectionsong in songs">
+                <div ng-show="sectionsong.id == section_song.song.id">
+
+                    <div ng-repeat="songpart in sectionsong.song_parts ">
+                        <a href="/profiles/{{songpart.user_instrument.user.id}}">
+                        <img src="/media/{{ songpart.user_instrument.user.picture}}" style="max-width: 50px; max-height: 50px;  border-radius: 1px">
+                        {{ songpart.user_instrument.user.first_name }} {{ songpart.user_instrument.user.last_name }}
+                        </a>
+                        {{ songpart.user_instrument.Instrument.name }}<br><br>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+            </div>
+        </div>
+
+        </div>
+       </div>
+
+        Add song to section: <input type="text" ng-model="queryTerm[$index]" placeholder=" type song name" class="input-large" ng-change="searchSong($index)"> <br>
+        <div class="row-fluid" infinite-scroll="show_more()">
+        <table class="table table-striped table-bordered table-hover">
+        <tr ng-repeat="hit in hits[$index]">
+
+            <td ng-click="searchSongAdd(section.id,$parent.$index,$index)">
+                <span class="glyphicon glyphicon-plus" style="font-size: x-small"></span>
+                {{ hit['_source']['name'] }} {{ hit['_source']['original_artist'] }} {{ hit['_source']['band'] }} {{ hit['_id'] }}
+             </td>
+
+        </tr>
+</table>
+        </div>
+
+        <hr>
+    </div>
+
+<h4>Comments: <span style="font-size: small; color: gray;font-style: italic">{{ setlist.comments.length }}</span></h4>
+<div ng-repeat="comment in setlist.comments" ng-show="setlist.comments">
+    <img src="/media/{{ comment.author.picture}}" style="max-width: 50px; max-height: 50px;  border-radius: 1px"/>
+    <span style="color: darkblue;"> {{ comment.author.username }} </span> :
+    {{ comment.body }}
+    <span style="font-style: italic; color: gray;"> {{ comment.created | moment:'fromNow'}}</span>
+    <hr>
+</div>
+<button class="btn btn-primary" ng-click="addCommentBoxVisible=!addCommentBoxVisible"> Add Comment</button>
+<div ng-show="addCommentBoxVisible">
+<form>
+  <div class="form-group">
+    <label for="commentEntry">Enter Comment</label>
+    <textarea class="form-control" rows="3" ng-model="$scope.commentbody"></textarea>
+  </div>
+
+<button type="submit" class="btn btn-default" ng-click="addSetlistComment($scope.commentbody)">Submit</button>
+</form>
+
+
