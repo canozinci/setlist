@@ -1,5 +1,5 @@
 Django==1.7
-Pillow==2.6.1
+Pillow==6.2.0
 PyJWT==0.3.2
 django-activity-stream==0.5.1
 django-cors-headers==1.0.0
